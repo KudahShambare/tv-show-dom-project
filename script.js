@@ -8,8 +8,9 @@ function setup() {
   
 
 function makePageForEpisodes(episodeList) {
-    let searchResults = HTMLInputElement.value;
-    console.log(searchResults);
+    let searchResults = document.querySelector("input");
+    let searchValue = searchResults.value;
+    console.log(searchValue);
   for (let i = 0; i < episodeList.length; i++) {
     
     let episodeFrame = document.createElement("section"); //A container for a single episode
@@ -39,8 +40,11 @@ function makePageForEpisodes(episodeList) {
     episodeImage.src = episodeList[i].image.medium;
     /*Search Button Functionality */
   let searchButton = document.querySelector("button");
-
+let user
   searchButton.addEventListener("click", function(){
+    /*episodeList.filter((elem)=>{
+      return elem.includes()
+    })*/
     
   });
   
