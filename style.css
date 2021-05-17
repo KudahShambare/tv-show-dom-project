@@ -45,6 +45,9 @@ a:hover{
   text-align: center;
   padding: 5%;
 }
+#episode-descriptor{
+  justify-items:center
+}
 #image{
   border-radius: 100%;
 }
