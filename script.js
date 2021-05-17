@@ -1,34 +1,28 @@
 //You can edit ALL of the code here
+let allEpisodes = getAllEpisodes();
 function setup() {
-  const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 }
  const rootElem = document.getElementById("root");
  
+ 
 function makePageForEpisodes(episodeList) {
    
   for (let i = 0; i < episodeList.length; i++) {
-
-    //A container for a single episode
-    let episodeFrame = document.createElement("section"); 
+    let episodeFrame = document.createElement("section"); //A container for a single episode
     episodeFrame.id = "episode-frame";
-
-// Episode title, season number and episode number
-    let episodeName = document.createElement("h4"); 
+    let episodeName = document.createElement("h4"); // Episode title, season number and episode number
     episodeFrame.appendChild(episodeName);
-
-// Episode Image
-    let episodeImage = document.createElement("img"); 
+    let episodeImage = document.createElement("img"); // Episode Image
     episodeImage.id = "image";
     episodeFrame.appendChild(episodeImage);
-    
-//Episode Description
-    let episodeDescription = document.createElement("div"); 
+    let episodeDescription = document.createElement("div"); //Episode Description
     episodeDescription.innerHTML = episodeList[i].summary;
-    episodeDescription.id="episode-descriptor"; 
+    episodeDescription.style.justifyItems = "center";
     episodeFrame.appendChild(episodeDescription);
+    episodeDescription;
     rootElem.appendChild(episodeFrame);
-
+    /*Formating Seasons and Episodes Numbers*/
     let seasonAndEpisodeNumber =
       "S" + episodeList[i].season + "E" + episodeList[i].number;
     if (episodeList[i].season < 10) {
@@ -40,10 +34,11 @@ function makePageForEpisodes(episodeList) {
         "S0" + episodeList[i].season + "E0" + episodeList[i].number;
     }
     episodeName.innerHTML = episodeList[i].name + " " + seasonAndEpisodeNumber;
-    episodeImage.src = episodeList[i].image.medium;  
-  }
+    episodeImage.src = episodeList[i].image.medium;//Giving an episode an image
  
+  }
+  
+    
 }
 
 window.onload = setup;
-
