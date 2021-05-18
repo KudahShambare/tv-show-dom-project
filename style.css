@@ -41,10 +41,11 @@ a:hover{
   border:solid;
   border-color:goldenrod;
   border-radius: 30%;
-  margin:auto 15px 15px;
+  margin:50px 15px 15px;
   text-align: center;
   padding: 5%;
 }
+
 #episode-descriptor{
   justify-items:center
 }
