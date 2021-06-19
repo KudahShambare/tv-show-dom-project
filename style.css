@@ -19,23 +19,20 @@ background-color: rgb(51, 224, 224);
 input{
   height: 60px;
   width: 680px;
+  font-size: xx-large;
 }
-button{
-  width: 200px;
-  height: 60px; 
-  font-size: x-large;
+
+::placeholder{
+  font-size:xx-large;
+  text-align: center;
 }
+
 h2{
   padding: 35px;
   background-color: aliceblue;
   
 }
-a{
-  color:yellowgreen;
-}
-a:hover{
-  color: rgb(192, 126, 45);
-}
+/* Main Content*/
 #episode-frame{
   background-color: aliceblue;
   border:solid;

@@ -14,6 +14,7 @@ let form = document.createElement("form");
 welcomeSection.appendChild(form);
 /*create a search box*/
 let searchBox = document.createElement("input");
+searchBox.setAttribute("placeholder", "Search Here");
 form.appendChild(searchBox);
 
 /*Page Display*/
@@ -73,11 +74,21 @@ function makePageForEpisodes(episodeList) {
     */
   }
 }
+/* Displaying Search Results*/
+let matches = document.createElement("h3");
+welcomeSection.appendChild(matches);
+
 searchBox.addEventListener("keyup", (e) => {
   let filteredArray = allEpisodes.filter((obj) => {
     return obj.name.toLowerCase().includes(e.target.value.toLowerCase());
   });
   console.log(filteredArray);
+  if (filteredArray.length != 1 && filteredArray.length != allEpisodes.length) {
+    matches.innerHTML = filteredArray.length + " matching items";
+  } else {
+    matches.innerHTML = "1 matching item";
+  }
+
   makePageForEpisodes(filteredArray);
 });
 
