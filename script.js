@@ -1,10 +1,6 @@
 //You can edit ALL of the code here
 
 let allEpisodes = getAllEpisodes();
-function setup() {
-  alert("This page is not responsive. For a better view, use a bigger screen.");
-  makePageForEpisodes(allEpisodes);
-}
 
 /*Call HTML Divs*/
 let welcomeSection = document.getElementById("welcome");
@@ -56,31 +52,20 @@ function makePageForEpisodes(episodeList) {
 
     //Giving an episode an image
     episodeImage.src = episodeList[i].image.medium;
-
-    /*Search Box Functionality*/
-
-    /*
-    searchBox.addEventListener("keyup", function () {
-      let searchResult = searchBox.value.toLowerCase();
-      let matches=[];
-      if (
-     
-        (!allEpisodes[i].name.toLowerCase().includes(searchResult) || (!allEpisodes[i].summary.toLowerCase().includes(searchResult))) 
-      ) {
-    
-        episodeFrame.style.display = "none";
-      }   
-    });
-    */
   }
 }
+/*Search Box Functionality*/
+
 /* Displaying Search Results*/
 let matches = document.createElement("h3");
 welcomeSection.appendChild(matches);
 
 searchBox.addEventListener("keyup", (e) => {
   let filteredArray = allEpisodes.filter((obj) => {
-    return obj.name.toLowerCase().includes(e.target.value.toLowerCase());
+    return (
+      obj.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+      obj.summary.toLowerCase().includes(e.target.value.toLowerCase())
+    );
   });
   console.log(filteredArray);
   if (filteredArray.length != 1 && filteredArray.length != allEpisodes.length) {
@@ -92,4 +77,3 @@ searchBox.addEventListener("keyup", (e) => {
   makePageForEpisodes(filteredArray);
 });
 
-window.onload = setup;
