@@ -50,10 +50,11 @@ function makePageForEpisodes(episodeList) {
     }
     episodeName.innerHTML = episodeList[i].name + " " + seasonAndEpisodeNumber;
 
-    //Giving an episode an image
+    //Giving an episode an image4
     episodeImage.src = episodeList[i].image.medium;
   }
 }
+makePageForEpisodes(allEpisodes);
 /*Search Box Functionality*/
 
 /* Displaying Search Results*/
@@ -61,19 +62,18 @@ let matches = document.createElement("h3");
 welcomeSection.appendChild(matches);
 
 searchBox.addEventListener("keyup", (e) => {
-  let filteredArray = allEpisodes.filter((obj) => {
-    return (
+  makePageForEpisodes(allEpisodes);
+  const filteredArray = allEpisodes.forEach((obj) => {
+    obj.querySelector("sect")
+  /*  if (
       obj.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
       obj.summary.toLowerCase().includes(e.target.value.toLowerCase())
-    );
+    )
+      console.log(kkkkkkkkkkkk);
   });
-  console.log(filteredArray);
+  makePageForEpisodes(filteredArray);*/
+
   if (filteredArray.length != 1 && filteredArray.length != allEpisodes.length) {
     matches.innerHTML = filteredArray.length + " matching items";
-  } else {
-    matches.innerHTML = "1 matching item";
   }
-
-  makePageForEpisodes(filteredArray);
 });
-
