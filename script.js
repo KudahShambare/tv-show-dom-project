@@ -5,10 +5,14 @@ let allEpisodes = getAllEpisodes();
 /*Call HTML Divs*/
 let welcomeSection = document.getElementById("welcome");
 const rootElem = document.getElementById("root");
-/*create a form*/
 
+/*create a form*/
 let form = document.createElement("form");
 welcomeSection.appendChild(form);
+
+/*Create a select*/
+let select = document.createElement("select");
+form.appendChild(select);
 
 /*create a search box*/
 let searchBox = document.createElement("input");
@@ -70,13 +74,32 @@ welcomeSection.appendChild(matches);
 
 searchBox.addEventListener("keyup", (e) => {
   let searchValue = e.target.value.toLowerCase();
-  let found = allEpisodes.filter(ep => {
-    return ep.name.toLowerCase().includes(searchValue);
-  })
+  let found = allEpisodes.filter((ep) => {
+    return (
+      ep.name.toLowerCase().includes(searchValue) ||
+      ep.summary.toLowerCase().includes(searchValue)
+    );
+  });
   console.log(found);
-  makePageForEpisodes(found)
-})
+  makePageForEpisodes(found);
+});
 /*Reset Button Functionality*/
 resetButton.addEventListener("click", () => {
   window.location.reload();
-})
+});
+/*Add options on select*/
+
+allEpisodes.map((ep) => {
+  let option = document.createElement("option");
+  select.appendChild(option);
+  option.innerHTML = `${ep.seasonAndEpisodeNumber} - ${ep.name}`;
+});
+/*On Selection*/
+select.addEventListener("click", (e) => {
+  let choice = e.target.value;
+
+  let choiceArray = allEpisodes.filter((ep) => {
+    return ep.name === choice;
+  });
+  makePageForEpisodes(choiceArray);
+});
