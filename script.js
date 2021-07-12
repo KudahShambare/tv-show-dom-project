@@ -6,12 +6,19 @@ let allEpisodes = getAllEpisodes();
 let welcomeSection = document.getElementById("welcome");
 const rootElem = document.getElementById("root");
 /*create a form*/
+
 let form = document.createElement("form");
 welcomeSection.appendChild(form);
+
 /*create a search box*/
 let searchBox = document.createElement("input");
 searchBox.setAttribute("placeholder", "Search Here");
 form.appendChild(searchBox);
+
+/*Make a reset button*/
+let resetButton = document.createElement("button");
+resetButton.innerHTML = "Search Bar Reset";
+form.appendChild(resetButton);
 
 /*Page Display*/
 function makePageForEpisodes(episodeList) {
@@ -62,18 +69,14 @@ let matches = document.createElement("h3");
 welcomeSection.appendChild(matches);
 
 searchBox.addEventListener("keyup", (e) => {
-  makePageForEpisodes(allEpisodes);
-  const filteredArray = allEpisodes.forEach((obj) => {
-    obj.querySelector("sect")
-  /*  if (
-      obj.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
-      obj.summary.toLowerCase().includes(e.target.value.toLowerCase())
-    )
-      console.log(kkkkkkkkkkkk);
-  });
-  makePageForEpisodes(filteredArray);*/
-
-  if (filteredArray.length != 1 && filteredArray.length != allEpisodes.length) {
-    matches.innerHTML = filteredArray.length + " matching items";
-  }
-});
+  let searchValue = e.target.value.toLowerCase();
+  let found = allEpisodes.filter(ep => {
+    return ep.name.toLowerCase().includes(searchValue);
+  })
+  console.log(found);
+  makePageForEpisodes(found)
+})
+/*Reset Button Functionality*/
+resetButton.addEventListener("click", () => {
+  window.location.reload();
+})

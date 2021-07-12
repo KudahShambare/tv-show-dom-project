@@ -27,12 +27,12 @@ input{
   text-align: center;
 }
 
-h2{
-  padding: 35px;
-  background-color: aliceblue;
-  
+a{
+  color:yellowgreen;
 }
-/* Main Content*/
+a:hover{
+  color: rgb(192, 126, 45);
+}
 #episode-frame{
   background-color: aliceblue;
   border:solid;
