@@ -1,6 +1,27 @@
 //You can edit ALL of the code here
 
-let allEpisodes = getAllEpisodes();
+/*Fetch Data From API*/
+let allEpisodes=[];
+function fetchFromAPI() {
+  fetch("https://api.tvmaze.com/shows/82/episodes")
+    .then((response) => {
+      response.json();
+    })
+    .then((data) => {
+      processData(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+fetchFromAPI();
+
+function processData(info) {
+  allEpisodes = info;
+  console.log(info);
+}
+
+//let allEpisodes = getAllEpisodes();
 
 /*Call HTML Divs*/
 let welcomeSection = document.getElementById("welcome");
@@ -26,6 +47,7 @@ form.appendChild(resetButton);
 
 /*Page Display*/
 function makePageForEpisodes(episodeList) {
+  rootElem.innerHTML = "";
   for (let i = 0; i < episodeList.length; i++) {
     //A container for a single episode
     let episodeFrame = document.createElement("section");
@@ -49,19 +71,15 @@ function makePageForEpisodes(episodeList) {
     rootElem.appendChild(episodeFrame);
 
     /*Formatting Seasons and Episodes Numbers*/
+
     let seasonAndEpisodeNumber =
-      "S" + episodeList[i].season + "E" + episodeList[i].number;
-    if (episodeList[i].season < 10) {
-      seasonAndEpisodeNumber =
-        "S0" + episodeList[i].season + "E" + episodeList[i].number;
-    }
-    if (episodeList[i].number < 10) {
-      seasonAndEpisodeNumber =
-        "S0" + episodeList[i].season + "E0" + episodeList[i].number;
-    }
+      "S" +
+      formartSeason(episodeList[i].season) +
+      "E" +
+      formartSeason(episodeList[i].number);
     episodeName.innerHTML = episodeList[i].name + " " + seasonAndEpisodeNumber;
 
-    //Giving an episode an image4
+    //Giving an episode an image
     episodeImage.src = episodeList[i].image.medium;
   }
 }
@@ -92,9 +110,12 @@ resetButton.addEventListener("click", () => {
 allEpisodes.map((ep) => {
   let option = document.createElement("option");
   select.appendChild(option);
-  option.innerHTML = `${ep.seasonAndEpisodeNumber} - ${ep.name}`;
+  option.innerHTML = `S${formartSeason(ep.season)}${formartSeason(
+    ep.number
+  )} - ${ep.name}`;
 });
 /*On Selection*/
+/*
 select.addEventListener("click", (e) => {
   let choice = e.target.value;
 
@@ -103,3 +124,12 @@ select.addEventListener("click", (e) => {
   });
   makePageForEpisodes(choiceArray);
 });
+
+*/
+function formartSeason(num) {
+  if (num < 10) {
+    return "0" + num;
+  } else {
+    return num;
+  }
+}
