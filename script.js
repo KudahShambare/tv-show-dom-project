@@ -127,6 +127,15 @@ select.addEventListener("click", (e) => {
   let choice = e.target.value.toLowerCase();
   console.log(choice);
   let choiceArray = choice.split(" ");
+  let myArray = choiceArray.slice(2);
+  let name = myArray.join(" ");
+
+  
+  allEpisodes.forEach(elem => {
+    if(elem.name.toLowerCase().includes(name))
+    makePageForEpisodes([elem])
+  })
+  
 
 });
 
