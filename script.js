@@ -1,24 +1,27 @@
 //You can edit ALL of the code here
 
 /*Fetch Data From API*/
-let allEpisodes=[];
+/*
+var allEpisodes = [];
 function fetchFromAPI() {
   fetch("https://api.tvmaze.com/shows/82/episodes")
     .then((response) => {
-      response.json();
+      response.json()
     })
-    .then((data) => {
-      processData(data);
-    })
+    .then(data => processData(data))
     .catch((error) => {
       console.log(error);
     });
 }
 fetchFromAPI();
+*/
+let allEpisodes = getAllEpisodes();
 
 function processData(info) {
-  allEpisodes = info;
-  console.log(info);
+  for (let i = 0; i < info.length; i++){
+    allEpisodes[i] = info[i];
+  }
+  console.log(info[0]);
 }
 
 //let allEpisodes = getAllEpisodes();
@@ -30,6 +33,9 @@ const rootElem = document.getElementById("root");
 /*create a form*/
 let form = document.createElement("form");
 welcomeSection.appendChild(form);
+
+let numberOfMatches = document.createElement("div");
+form.appendChild(numberOfMatches);
 
 /*Create a select*/
 let select = document.createElement("select");
@@ -98,7 +104,8 @@ searchBox.addEventListener("keyup", (e) => {
       ep.summary.toLowerCase().includes(searchValue)
     );
   });
-  console.log(found);
+  console.log(found.length);
+  numberOfMatches.innerHTML = found.length+"/"+allEpisodes.length+" matches";
   makePageForEpisodes(found);
 });
 /*Reset Button Functionality*/
@@ -115,17 +122,15 @@ allEpisodes.map((ep) => {
   )} - ${ep.name}`;
 });
 /*On Selection*/
-/*
-select.addEventListener("click", (e) => {
-  let choice = e.target.value;
 
-  let choiceArray = allEpisodes.filter((ep) => {
-    return ep.name === choice;
-  });
-  makePageForEpisodes(choiceArray);
+select.addEventListener("click", (e) => {
+  let choice = e.target.value.toLowerCase();
+  console.log(choice);
+  let choiceArray = choice.split(" ");
+
 });
 
-*/
+/*Formart Season Function*/
 function formartSeason(num) {
   if (num < 10) {
     return "0" + num;
