@@ -1,29 +1,22 @@
 //You can edit ALL of the code here
 
 /*Fetch Data From API*/
-/*
-var allEpisodes = [];
-function fetchFromAPI() {
-  fetch("https://api.tvmaze.com/shows/82/episodes")
-    .then((response) => {
-      response.json()
-    })
-    .then(data => processData(data))
+function fetchEpisodes(dataArr) {
+  makePageForEpisodes(dataArr);
+  display(dataArr);
+  selectionOptions(dataArr);
+  selecting(dataArr);
+}
+
+fetch("https://api.tvmaze.com/shows/82/episodes")
+  .then((response) => {
+    return response.json()
+  })
+  .then(data => fetchEpisodes(data))/*
     .catch((error) => {
       console.log(error);
-    });
-}
-fetchFromAPI();
+    })
 */
-let allEpisodes = getAllEpisodes();
-
-function processData(info) {
-  for (let i = 0; i < info.length; i++){
-    allEpisodes[i] = info[i];
-  }
-  console.log(info[0]);
-}
-
 //let allEpisodes = getAllEpisodes();
 
 /*Call HTML Divs*/
@@ -89,10 +82,30 @@ function makePageForEpisodes(episodeList) {
     episodeImage.src = episodeList[i].image.medium;
   }
 }
-makePageForEpisodes(allEpisodes);
+//makePageForEpisodes(allEpisodes);
 /*Search Box Functionality*/
 
 /* Displaying Search Results*/
+function display(arr) {
+  
+let matches = document.createElement("h3");
+welcomeSection.appendChild(matches);
+
+searchBox.addEventListener("keyup", (e) => {
+  let searchValue = e.target.value.toLowerCase();
+  let found = arr.filter((ep) => {
+    return (
+      ep.name.toLowerCase().includes(searchValue) ||
+      ep.summary.toLowerCase().includes(searchValue)
+    );
+  });
+
+  numberOfMatches.innerHTML =
+    found.length + "/" + arr.length + " matches";
+  makePageForEpisodes(found);
+});
+}
+/*
 let matches = document.createElement("h3");
 welcomeSection.appendChild(matches);
 
@@ -104,16 +117,26 @@ searchBox.addEventListener("keyup", (e) => {
       ep.summary.toLowerCase().includes(searchValue)
     );
   });
-  console.log(found.length);
+
   numberOfMatches.innerHTML = found.length+"/"+allEpisodes.length+" matches";
   makePageForEpisodes(found);
 });
+*/
 /*Reset Button Functionality*/
 resetButton.addEventListener("click", () => {
   window.location.reload();
 });
 /*Add options on select*/
-
+function selectionOptions(arr) {
+  arr.map((ep) => {
+    let option = document.createElement("option");
+    select.appendChild(option);
+    option.innerHTML = `S${formartSeason(ep.season)}${formartSeason(
+      ep.number
+    )} - ${ep.name}`;
+  });
+}
+/*
 allEpisodes.map((ep) => {
   let option = document.createElement("option");
   select.appendChild(option);
@@ -121,8 +144,22 @@ allEpisodes.map((ep) => {
     ep.number
   )} - ${ep.name}`;
 });
+/*
 /*On Selection*/
+function selecting(val) {
+  select.addEventListener("click", (e) => {
+    let choice = e.target.value.toLowerCase();
+    console.log(choice);
+    let choiceArray = choice.split(" ");
+    let myArray = choiceArray.slice(2);
+    let name = myArray.join(" ");
 
+  val.forEach((elem) => {
+      if (elem.name.toLowerCase().includes(name)) makePageForEpisodes([elem]);
+    });
+  });
+}
+/*
 select.addEventListener("click", (e) => {
   let choice = e.target.value.toLowerCase();
   console.log(choice);
@@ -138,6 +175,7 @@ select.addEventListener("click", (e) => {
   
 
 });
+*/
 
 /*Formart Season Function*/
 function formartSeason(num) {
