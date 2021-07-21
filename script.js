@@ -97,10 +97,10 @@ resetButton.addEventListener("click", () => {
   window.location.reload();
 });
 /*Add options on select*/
-function selectionOptions(arr,tag) {
+function selectionOptions(arr) {
   arr.map((ep) => {
     let option = document.createElement("option");
-    tag.appendChild(option);
+    select.appendChild(option);
     option.innerHTML = `S${formartSeason(ep.season)}${formartSeason(
       ep.number
     )} - ${ep.name}`;
@@ -137,9 +137,8 @@ function formartSeason(num) {
 function fetchEpisodes(dataArr) {
   makePageForEpisodes(dataArr);
   display(dataArr);
-  selectionOptions(dataArr,select);
+  selectionOptions(dataArr);
   selecting(dataArr);
-  showSelectOption();
 }
 
 fetch("https://api.tvmaze.com/shows/82/episodes")
@@ -154,7 +153,7 @@ fetch("https://api.tvmaze.com/shows/82/episodes")
 /*Level 400*/
 /*
 
-Add a select input which allows you to choose which show you are interested in
+
 When a show is selected, your app should display the episodes for that show as per the earlier levels of this challenge, except that it should first fetch the episode list from the API - see below
 You can get the list of shows by loading shows.js in your index.html and using the provided function: getAllShows()
 Ensure that your search and episode selector controls still work correctly when you switch shows.
@@ -171,4 +170,20 @@ function showSelectOption() {
   })
 
 }
-/*Fetch Show*/
+showSelectOption();
+/************************************************************************************************** */
+/*Show Selection Click Event*/
+showSelector.addEventListener("click", (e) => {
+  let ourShow = e.target.value;
+  let filteredShows = allShows.find(show => show.name.toLowerCase() === ourShow.toLowerCase());
+  //console.log(filteredShows);
+  let ourId = filteredShows.id;
+  makePageForEpisodes([])
+  fetch(`https://api.tvmaze.com/shows/${ourId}/episodes`).then(response => {
+    return response.json();
+  }).then(data => fetchEpisodes(data)).catch(error => {
+    console.log(error)
+  })
+
+
+})
