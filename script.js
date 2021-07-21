@@ -1,6 +1,5 @@
 //You can edit ALL of the code here
 
-
 /*Call HTML Divs*/
 let welcomeSection = document.getElementById("welcome");
 const rootElem = document.getElementById("root");
@@ -73,23 +72,21 @@ function makePageForEpisodes(episodeList) {
 
 /* Displaying Search Results*/
 function display(arr) {
-  
-let matches = document.createElement("h3");
-welcomeSection.appendChild(matches);
+  let matches = document.createElement("h3");
+  welcomeSection.appendChild(matches);
 
-searchBox.addEventListener("keyup", (e) => {
-  let searchValue = e.target.value.toLowerCase();
-  let found = arr.filter((ep) => {
-    return (
-      ep.name.toLowerCase().includes(searchValue) ||
-      ep.summary.toLowerCase().includes(searchValue)
-    );
+  searchBox.addEventListener("keyup", (e) => {
+    let searchValue = e.target.value.toLowerCase();
+    let found = arr.filter((ep) => {
+      return (
+        ep.name.toLowerCase().includes(searchValue) ||
+        ep.summary.toLowerCase().includes(searchValue)
+      );
+    });
+
+    numberOfMatches.innerHTML = found.length + "/" + arr.length + " matches";
+    makePageForEpisodes(found);
   });
-
-  numberOfMatches.innerHTML =
-    found.length + "/" + arr.length + " matches";
-  makePageForEpisodes(found);
-});
 }
 
 /*Reset Button Functionality*/
@@ -116,12 +113,11 @@ function selecting(val) {
     let myArray = choiceArray.slice(2);
     let name = myArray.join(" ");
 
-  val.forEach((elem) => {
+    val.forEach((elem) => {
       if (elem.name.toLowerCase().includes(name)) makePageForEpisodes([elem]);
     });
   });
 }
-
 
 /*Formart Season Function*/
 function formartSeason(num) {
@@ -143,12 +139,12 @@ function fetchEpisodes(dataArr) {
 
 fetch("https://api.tvmaze.com/shows/82/episodes")
   .then((response) => {
-    return response.json()
+    return response.json();
   })
-  .then(data => fetchEpisodes(data))
-    .catch((error) => {
-      console.log(error);
-    })
+  .then((data) => fetchEpisodes(data))
+  .catch((error) => {
+    console.log(error);
+  });
 
 /*Level 400*/
 /*
@@ -158,32 +154,33 @@ When a show is selected, your app should display the episodes for that show as p
 You can get the list of shows by loading shows.js in your index.html and using the provided function: getAllShows()
 Ensure that your search and episode selector controls still work correctly when you switch shows.
 */
-  let allShows = getAllShows();
+let allShows = getAllShows();
 
 /*Show Select Options*/
-  
-function showSelectOption() {
-  allShows.map(show => {
-    let option = document.createElement("option");
-    option.innerHTML = show.name
-    showSelector.appendChild(option)
-  })
 
+function showSelectOption() {
+  allShows.map((show) => {
+    let option = document.createElement("option");
+    option.innerHTML = show.name;
+    showSelector.appendChild(option);
+  });
 }
 showSelectOption();
-/************************************************************************************************** */
+
 /*Show Selection Click Event*/
 showSelector.addEventListener("click", (e) => {
   let ourShow = e.target.value;
-  let filteredShows = allShows.find(show => show.name.toLowerCase() === ourShow.toLowerCase());
-  //console.log(filteredShows);
+  let filteredShows = allShows.find(
+    (show) => show.name.toLowerCase() === ourShow.toLowerCase()
+  );
   let ourId = filteredShows.id;
-  makePageForEpisodes([])
-  fetch(`https://api.tvmaze.com/shows/${ourId}/episodes`).then(response => {
-    return response.json();
-  }).then(data => fetchEpisodes(data)).catch(error => {
-    console.log(error)
-  })
-
-
-})
+  makePageForEpisodes([]);
+  fetch(`https://api.tvmaze.com/shows/${ourId}/episodes`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => fetchEpisodes(data))
+    .catch((error) => {
+      console.log(error);
+    });
+});
