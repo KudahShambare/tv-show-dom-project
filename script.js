@@ -1,23 +1,5 @@
 //You can edit ALL of the code here
 
-/*Fetch Data From API*/
-function fetchEpisodes(dataArr) {
-  makePageForEpisodes(dataArr);
-  display(dataArr);
-  selectionOptions(dataArr);
-  selecting(dataArr);
-}
-
-fetch("https://api.tvmaze.com/shows/82/episodes")
-  .then((response) => {
-    return response.json()
-  })
-  .then(data => fetchEpisodes(data))/*
-    .catch((error) => {
-      console.log(error);
-    })
-*/
-//let allEpisodes = getAllEpisodes();
 
 /*Call HTML Divs*/
 let welcomeSection = document.getElementById("welcome");
@@ -33,6 +15,10 @@ form.appendChild(numberOfMatches);
 /*Create a select*/
 let select = document.createElement("select");
 form.appendChild(select);
+
+/*Create a show selector*/
+let showSelector = document.createElement("select");
+form.appendChild(showSelector);
 
 /*create a search box*/
 let searchBox = document.createElement("input");
@@ -82,7 +68,7 @@ function makePageForEpisodes(episodeList) {
     episodeImage.src = episodeList[i].image.medium;
   }
 }
-//makePageForEpisodes(allEpisodes);
+
 /*Search Box Functionality*/
 
 /* Displaying Search Results*/
@@ -105,46 +91,22 @@ searchBox.addEventListener("keyup", (e) => {
   makePageForEpisodes(found);
 });
 }
-/*
-let matches = document.createElement("h3");
-welcomeSection.appendChild(matches);
 
-searchBox.addEventListener("keyup", (e) => {
-  let searchValue = e.target.value.toLowerCase();
-  let found = allEpisodes.filter((ep) => {
-    return (
-      ep.name.toLowerCase().includes(searchValue) ||
-      ep.summary.toLowerCase().includes(searchValue)
-    );
-  });
-
-  numberOfMatches.innerHTML = found.length+"/"+allEpisodes.length+" matches";
-  makePageForEpisodes(found);
-});
-*/
 /*Reset Button Functionality*/
 resetButton.addEventListener("click", () => {
   window.location.reload();
 });
 /*Add options on select*/
-function selectionOptions(arr) {
+function selectionOptions(arr,tag) {
   arr.map((ep) => {
     let option = document.createElement("option");
-    select.appendChild(option);
+    tag.appendChild(option);
     option.innerHTML = `S${formartSeason(ep.season)}${formartSeason(
       ep.number
     )} - ${ep.name}`;
   });
 }
-/*
-allEpisodes.map((ep) => {
-  let option = document.createElement("option");
-  select.appendChild(option);
-  option.innerHTML = `S${formartSeason(ep.season)}${formartSeason(
-    ep.number
-  )} - ${ep.name}`;
-});
-/*
+
 /*On Selection*/
 function selecting(val) {
   select.addEventListener("click", (e) => {
@@ -159,23 +121,7 @@ function selecting(val) {
     });
   });
 }
-/*
-select.addEventListener("click", (e) => {
-  let choice = e.target.value.toLowerCase();
-  console.log(choice);
-  let choiceArray = choice.split(" ");
-  let myArray = choiceArray.slice(2);
-  let name = myArray.join(" ");
 
-  
-  allEpisodes.forEach(elem => {
-    if(elem.name.toLowerCase().includes(name))
-    makePageForEpisodes([elem])
-  })
-  
-
-});
-*/
 
 /*Formart Season Function*/
 function formartSeason(num) {
@@ -185,3 +131,44 @@ function formartSeason(num) {
     return num;
   }
 }
+/*Level 350*/
+
+/*Fetch Data From API*/
+function fetchEpisodes(dataArr) {
+  makePageForEpisodes(dataArr);
+  display(dataArr);
+  selectionOptions(dataArr,select);
+  selecting(dataArr);
+  showSelectOption();
+}
+
+fetch("https://api.tvmaze.com/shows/82/episodes")
+  .then((response) => {
+    return response.json()
+  })
+  .then(data => fetchEpisodes(data))
+    .catch((error) => {
+      console.log(error);
+    })
+
+/*Level 400*/
+/*
+
+Add a select input which allows you to choose which show you are interested in
+When a show is selected, your app should display the episodes for that show as per the earlier levels of this challenge, except that it should first fetch the episode list from the API - see below
+You can get the list of shows by loading shows.js in your index.html and using the provided function: getAllShows()
+Ensure that your search and episode selector controls still work correctly when you switch shows.
+*/
+  let allShows = getAllShows();
+
+/*Show Select Options*/
+  
+function showSelectOption() {
+  allShows.map(show => {
+    let option = document.createElement("option");
+    option.innerHTML = show.name
+    showSelector.appendChild(option)
+  })
+
+}
+/*Fetch Show*/
