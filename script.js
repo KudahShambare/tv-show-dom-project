@@ -135,6 +135,7 @@ function fetchEpisodes(dataArr) {
   display(dataArr);
   selectionOptions(dataArr);
   selecting(dataArr);
+  fetchShow(dataArr)
 }
 
 fetch("https://api.tvmaze.com/shows/82/episodes")
@@ -166,6 +167,62 @@ function showSelectOption() {
   });
 }
 showSelectOption();
+/********************************************************************************************* */
+/*Level 500 Page Display*/
+function displayShow(arr) {
+  let container = document.createElement("div");
+  container.id = "showContainer";
+  rootElem.appendChild(container)
+  let showDiv = document.createElement("div");
+  rootElem.appendChild(showDiv)
+  let home = document.createElement("button");
+  showDiv.appendChild(home);
+  home.innerHTML = "Back";
+  for (let i = 0; i < arr.length; i++){
+    let singleShow = document.createElement("div");
+    singleShow.id="singleShow"
+    container.appendChild(singleShow);
+//Show Name
+    let showName = document.createElement("h2");
+    showName.innerHTML += arr[i].name;
+    singleShow.appendChild(showName);
+
+//Show image
+    let showPhoto = document.createElement("img");
+    showPhoto.src = arr[i].image.medium;
+    //Show rating
+    let rating = document.createElement("p");
+    //rating.innerHTML +=`Rating: ${arr[i].rating.average}`;
+    //Show status
+    let status = document.createElement("p");
+    status.innerHTML = "Status: "+arr[i].status;
+  //  Show runtime
+    let runTime = document.createElement("p");
+    runTime.innerHTML = "Runtime: "+arr[i].runtime+" mins";
+    //Show genre
+    let genre = document.createElement("p");
+    genre.innerHTML = "Genre:" ; 
+
+    singleShow.appendChild(showPhoto);
+    singleShow.appendChild(rating);
+    singleShow.appendChild(status);
+    singleShow.appendChild(runTime);
+    singleShow.appendChild(genre);
+
+    home.addEventListener("click", () => {
+      window.location.reload();
+    })
+   }
+
+}
+function fetchShow(dataArr) {
+  displayShow(dataArr);
+  display(dataArr);
+  selectionOptions(dataArr);
+  selecting(dataArr);
+  
+}
+/************************************************************************************************* */
 
 /*Show Selection Click Event*/
 showSelector.addEventListener("click", (e) => {
@@ -179,7 +236,7 @@ showSelector.addEventListener("click", (e) => {
     .then((response) => {
       return response.json();
     })
-    .then((data) => fetchEpisodes(data))
+    .then((data) => fetchShow(data))
     .catch((error) => {
       console.log(error);
     });

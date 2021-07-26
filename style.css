@@ -59,3 +59,12 @@ a:hover{
   font-size: larger;
   padding: 25px;
 }
+/*Shows*/
+#showContainer{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  
+}
+#singleShow{
+  border: solid red;
+}
