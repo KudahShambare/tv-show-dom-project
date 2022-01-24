@@ -1,0 +1,17 @@
+body{
+  background-color: rgb(61, 58, 58);
+  color:rgb(155, 207, 150);
+}
+/*Mobile View*/
+
+h3{
+  text-align: center;
+}
+#episodeDetails{
+
+  border: solid rgb(155, 207, 150) thick;
+  margin-bottom: 4%;
+}
+img{
+margin:5% auto auto 10%;
+}
