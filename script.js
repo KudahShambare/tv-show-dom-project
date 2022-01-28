@@ -25,7 +25,6 @@ val.style.display="none"
 //Button Events For Hiding And Displaying All Episodes
 let displayAll=document.getElementById("showAllEpisdes");
 displayAll.addEventListener("click",()=>{
-  console.log("clicked");
   render(allEpisodes)
 });
 let hideAll=document.getElementById("hideAllEpisodes");

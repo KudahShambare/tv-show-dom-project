@@ -18,3 +18,19 @@ margin:5% auto auto 10%;
 #copyrights,label{
   color:azure;
 }
+
+/*Big Screens Display*/
+@media screen and (min-width:700px) {
+  #episodesContainer{
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 1%;
+  }
+}
+@media screen and (min-width:1000px) {
+  #episodesContainer{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 1%;
+  }
+}
