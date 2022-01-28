@@ -1,9 +1,13 @@
+//initial load
+
+window.addEventListener("load", () => {
+  display(allEpisodes,[]);
+});
+
+
 //Getting all episodes from episode.js file
 
 let allEpisodes = getAllEpisodes();
-console.log(allEpisodes);
-
-
 
 //Get the episode container
 const episodesContainer = document.getElementById("episodesContainer");
@@ -14,6 +18,22 @@ const numberConverter = (num) => {
     return "0" + num;
   } else return num;
 };
+//Hiding Function
+let hide=(val)=>{
+val.style.display="none"
+}
+//Button Events For Hiding And Displaying All Episodes
+let displayAll=document.getElementById("showAllEpisdes");
+displayAll.addEventListener("click",()=>{
+  console.log("clicked");
+  render(allEpisodes)
+});
+let hideAll=document.getElementById("hideAllEpisodes");
+hideAll.addEventListener("click",()=>{
+    episodesContainer.style.display="none";
+    location.reload();
+
+})
 
 //A function to enable us to rerender the details with different info
 const createEpisodeTemplate = (episode) => {
@@ -51,32 +71,58 @@ const createEpisodeTemplate = (episode) => {
 };
 
 //Loop through the episodes to display them
-const display = (arr) => {
-    for (let i = 0; i < arr.length; i++) {
-      createEpisodeTemplate(arr[i]);
+let display = (array) => {
+  //render(array);
+   
+    //Search Functionality
+const search = document.getElementById("search");
+    let searching=(val)=>{
+search.addEventListener("keyup",(e)=>{
+  //episodesContainer.style.display="none";
+  let searchValue= e.target.value;
+  let newArr=[];
+  val.forEach((elem)=>{
+    if(  elem.name.toLowerCase().includes(searchValue) ||
+    elem.summary.toLowerCase().includes(searchValue)){
+      newArr.push(elem)
     }
-  };
-   /*Render Episodes Function*/
-
-
-  //Search Functionality
-const searching = (arr) => {
-    const search = document.getElementById("search");
-    search.addEventListener("keyup", (e) => {
-      const searchValue = e.target.value.toLowerCase();
-      let filtered=arr.filter((val)=>{
-          return val.name.toLowerCase().includes(searchValue) || val.summary.toLowerCase().includes(searchValue);
-      })
-      console.log(filtered);
-      display(filtered);
-
-    })
-  };
-  searching(allEpisodes);
+ 
+  })
+  console.log(newArr);
+  render(newArr);
+  })
+    }
+    searching(array);
+   // render(array);
   
-//initial load
 
-window.addEventListener("load",()=>{
-  display(allEpisodes);
+};
+/*Render Episodes Function*/
+let render=(arr)=>{
+  for (let i = 0; i < arr.length; i++) {
+    createEpisodeTemplate(arr[i]);
+  }
+}
+//Search Functionality
+//const search = document.getElementById("search");
+/*
+let searching = (arr) => {
+  search.addEventListener("keyup", (e) => {
+    let searchValue = e.target.value.toLowerCase();
+    console.log(searchValue);
+    arr.filter((val) => {
+      return (
+        val.name.toLowerCase().includes(searchValue) ||
+        val.summary.toLowerCase().includes(searchValue)
+      );
+    });
+     console.log(arr);
+    //allEpisodes = filtered;
+    return;
+  });
+  */
+//};
+//console.log(allEpisodes);
+//searching(allEpisodes);
+//console.log(allEpisodes);
 
-})
