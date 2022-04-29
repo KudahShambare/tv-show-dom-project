@@ -1,13 +1,21 @@
-//initial load
-
-window.addEventListener("load", () => {
-  display(allEpisodes,[]);
-});
 
 
 //Getting all episodes from episode.js file
 
 let allEpisodes = getAllEpisodes();
+
+//Search Functionality (everything inside)
+const search = document.getElementById("search");
+let searching = (val) => {
+
+
+/*Render Episodes Function*/
+let render = (arr) => {
+  for (let i = 0; i < arr.length; i++) {
+    createEpisodeTemplate(arr[i]);
+  }
+};
+
 
 //Get the episode container
 const episodesContainer = document.getElementById("episodesContainer");
@@ -19,20 +27,19 @@ const numberConverter = (num) => {
   } else return num;
 };
 //Hiding Function
-let hide=(val)=>{
-val.style.display="none"
-}
+let hide = (val) => {
+  val.style.display = "none";
+};
 //Button Events For Hiding And Displaying All Episodes
-let displayAll=document.getElementById("showAllEpisdes");
-displayAll.addEventListener("click",()=>{
-  render(allEpisodes)
+let displayAll = document.getElementById("showAllEpisdes");
+displayAll.addEventListener("click", () => {
+  render(allEpisodes);
 });
-let hideAll=document.getElementById("hideAllEpisodes");
-hideAll.addEventListener("click",()=>{
-    episodesContainer.style.display="none";
-    location.reload();
-
-})
+let hideAll = document.getElementById("hideAllEpisodes");
+hideAll.addEventListener("click", () => {
+  episodesContainer.style.display = "none";
+  location.reload();
+});
 
 //A function to enable us to rerender the details with different info
 const createEpisodeTemplate = (episode) => {
@@ -69,59 +76,43 @@ const createEpisodeTemplate = (episode) => {
     episode.url;
 };
 
-//Loop through the episodes to display them
-let display = (array) => {
-  //render(array);
-   
-    //Search Functionality
-const search = document.getElementById("search");
-    let searching=(val)=>{
-search.addEventListener("keyup",(e)=>{
-  //episodesContainer.style.display="none";
-  let searchValue= e.target.value;
-  let newArr=[];
-  val.forEach((elem)=>{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+  search.addEventListener("keyup", (e) => {
+    //episodesContainer.style.display="none";
+    let searchValue = e.target.value;
+    // console.log(searchValue);
+    let newArr = [];
+    val.forEach((elem)=>{
     if(  elem.name.toLowerCase().includes(searchValue) ||
     elem.summary.toLowerCase().includes(searchValue)){
       newArr.push(elem)
     }
+    allEpisodes=newArr;
+    render(allEpisodes)
+
+  })
+    
  
-  })
-  console.log(newArr);
-  render(newArr);
-  })
-    }
-    searching(array);
-   // render(array);
-  
-
-};
-/*Render Episodes Function*/
-let render=(arr)=>{
-  for (let i = 0; i < arr.length; i++) {
-    createEpisodeTemplate(arr[i]);
-  }
-}
-//Search Functionality
-//const search = document.getElementById("search");
-/*
-let searching = (arr) => {
-  search.addEventListener("keyup", (e) => {
-    let searchValue = e.target.value.toLowerCase();
-    console.log(searchValue);
-    arr.filter((val) => {
-      return (
-        val.name.toLowerCase().includes(searchValue) ||
-        val.summary.toLowerCase().includes(searchValue)
-      );
-    });
-     console.log(arr);
-    //allEpisodes = filtered;
-    return;
   });
-  */
-//};
-//console.log(allEpisodes);
-//searching(allEpisodes);
-//console.log(allEpisodes);
+};
 
+searching(allEpisodes)
